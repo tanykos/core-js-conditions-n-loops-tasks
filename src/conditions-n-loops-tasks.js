@@ -413,7 +413,7 @@ function getSpiralMatrix(size) {
 
   return res;
 }
-// console.log(getSpiralMatrix(3));
+
 /**
  * Rotates a matrix by 90 degrees clockwise in place.
  * Take into account that the matrix size can be very large. Consider how you can optimize your solution.
@@ -429,8 +429,27 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const copyArr = [];
+  const mArr = matrix;
+  let rowIndex;
+
+  for (let i = 0; i < matrix.length; i += 1) {
+    copyArr[i] = [];
+    for (let j = 0; j < matrix.length; j += 1) {
+      copyArr[i][j] = matrix[i][j];
+    }
+  }
+
+  for (let i = 0; i < matrix.length; i += 1) {
+    rowIndex = matrix.length - 1;
+    for (let j = 0; j < matrix.length; j += 1) {
+      mArr[i][j] = copyArr[rowIndex][i];
+      rowIndex -= 1;
+    }
+  }
+
+  return matrix;
 }
 
 /**
@@ -447,8 +466,37 @@ function rotateMatrix(/* matrix */) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  function changeEl(arrProps, i, j) {
+    const tempArr = arrProps;
+    const temp = tempArr[i];
+    tempArr[i] = tempArr[j];
+    tempArr[j] = temp;
+  }
+
+  function quickSort(arrProps, left, right) {
+    if (left < right) {
+      const base = arr[right];
+      let i = left - 1;
+
+      for (let j = left; j < right; j += 1) {
+        if (arr[j] <= base) {
+          i += 1;
+          changeEl(arr, i, j);
+        }
+      }
+
+      changeEl(arrProps, i + 1, right);
+      const baseIndex = i + 1;
+
+      quickSort(arrProps, left, baseIndex - 1);
+      quickSort(arrProps, baseIndex + 1, right);
+    }
+  }
+
+  const n = arr.length;
+  quickSort(arr, 0, n - 1);
+  return arr;
 }
 
 /**
@@ -470,6 +518,31 @@ function sortByAsc(/* arr */) {
  */
 function shuffleChar(/* str, iterations */) {
   throw new Error('Not implemented');
+  // let currIter = 0;
+  // // let res = '';
+  // const leng = str.length;
+
+  // function shuffle(currStr) {
+  //   console.log(currStr);
+  //   let even = currStr[0];
+  //   let odd = currStr[1];
+
+  //   for (let i = 2; i < leng; i += 1) {
+  //     if (i % 2 === 0) {
+  //       even += currStr[i];
+  //     } else {
+  //       odd += currStr[i];
+  //     }
+  //   }
+  //   // res = even + odd;
+  //   currIter += 1;
+  //   if (currIter < iterations) {
+  //     return shuffle(even + odd);
+  //   }
+  //   return even + odd;
+  // }
+
+  // return shuffle(str);
 }
 
 /**
