@@ -516,40 +516,42 @@ function sortByAsc(arr) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
-  // let currIter = 0;
-  // // let res = '';
-  // const leng = str.length;
+function shuffleChar(str, iterations) {
+  let currIter = 1;
+  const leng = str.length;
+  const cash = [str];
 
-  // function shuffle(currStr) {
-  //   console.log(currStr);
-  //   let even = currStr[0];
-  //   let odd = currStr[1];
+  function shuffle(currStr) {
+    let even = currStr[0];
+    let odd = currStr[1];
 
-  //   for (let i = 2; i < leng; i += 1) {
-  //     if (i % 2 === 0) {
-  //       even += currStr[i];
-  //     } else {
-  //       odd += currStr[i];
-  //     }
-  //   }
-  //   // res = even + odd;
-  //   currIter += 1;
-  //   if (currIter < iterations) {
-  //     return shuffle(even + odd);
-  //   }
-  //   return even + odd;
-  // }
+    for (let i = 2; i < leng; i += 1) {
+      if (i % 2 === 0) {
+        even += currStr[i];
+      } else {
+        odd += currStr[i];
+      }
+    }
+    const resStr = even + odd;
+    if (resStr !== str) {
+      cash[currIter] = resStr;
+      currIter += 1;
+      shuffle(even + odd);
+    }
+  }
 
-  // return shuffle(str);
+  shuffle(str);
+
+  const n = iterations % currIter;
+
+  return cash[n];
 }
 
 /**
  * Returns the nearest largest integer consisting of the digits of the given positive integer.
  * If there is no such number, it returns the original number.
  * Usage of String class methods is not allowed in this task.
- *
+ *2-1,3-2, 4-2, 5-4, 6-4, 7-3, 8-3, 9-6, 10-6, 11-10,
  * @example:
  * 12345    => 12354
  * 123450   => 123504
